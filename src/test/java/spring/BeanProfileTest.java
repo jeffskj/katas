@@ -5,6 +5,8 @@ import java.util.Map;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 
+import spring.profiles.Database;
+
 public class BeanProfileTest extends SpringContextTestSupport {
     private static final String PROFILES_ACTIVE_PROPERTY = "spring.profiles.active";
 

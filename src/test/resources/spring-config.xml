@@ -8,6 +8,21 @@
 	<context:annotation-config />
 	<context:component-scan base-package="spring" />
 	
+    <bean id="frontendDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:frontend"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+   
+    <bean id="oldwDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <qualifier type="DataWarehouse"/>
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:mem:dw"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+   
 	<beans profile="dev">
 	   <bean class="spring.DevDatabase"/>
 	</beans>
