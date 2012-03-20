@@ -15,7 +15,10 @@
    <context:annotation-config />
    <context:component-scan base-package="spring" scoped-proxy="targetClass" />
 
+
    <!-- Caching -->
+   <cache:annotation-driven proxy-target-class="true"/>
+   
    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
       <property name="caches">
          <set>
