@@ -1,33 +1,40 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
          http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
          http://www.springframework.org/schema/context
          http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-	<context:annotation-config />
-	<context:component-scan base-package="spring" />
-	
-    <bean id="frontendDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:frontend"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-    </bean>
-   
-    <bean id="oldwDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <qualifier type="DataWarehouse"/>
-        <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:dw"/>
-        <property name="username" value="sa"/>
-        <property name="password" value=""/>
-    </bean>
-   
-	<beans profile="dev">
-	   <bean class="spring.DevDatabase"/>
-	</beans>
-	
-	<beans profile="prod">
-	   <bean class="spring.ProdDatabase"/>
-	</beans>
+   <context:annotation-config />
+   <context:component-scan base-package="spring" scoped-proxy="targetClass" />
+
+   <!-- allows AOP -->
+   <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+
+
+   <!-- Qualiers -->
+   <bean id="frontendDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" primary="true">
+      <property name="driverClassName" value="org.h2.Driver" />
+      <property name="url" value="jdbc:h2:mem:frontend" />
+      <property name="username" value="sa" />
+      <property name="password" value="" />
+   </bean>
+
+   <bean id="oldwDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      <qualifier type="DataWarehouse" />
+      <property name="driverClassName" value="org.h2.Driver" />
+      <property name="url" value="jdbc:h2:mem:dw" />
+      <property name="username" value="sa" />
+      <property name="password" value="" />
+   </bean>
+   <!-- END Qualiers -->
+
+   <!-- Profiles -->
+   <beans profile="dev">
+      <bean class="spring.DevDatabase" />
+   </beans>
+
+   <beans profile="prod">
+      <bean class="spring.ProdDatabase" />
+   </beans>
 </beans>
